@@ -89,11 +89,11 @@ const SkillsComponent = () => {
           {skillCategories.map((cat, i) => (
             <div
               key={cat.label}
-              className="glass-card rounded-2xl p-6 animate-fade-in-up hover:shadow-lg hover:shadow-indigo-50 transition-all duration-300 hover:-translate-y-1"
+              className="glass-card rounded-none p-6 animate-fade-in-up hover:shadow-lg hover:shadow-indigo-50 transition-all duration-300 hover:-translate-y-1"
               style={{ animationDelay: `${i * 0.1}s` }}
             >
               <div
-                className={`inline-flex items-center px-3 py-1 rounded-lg bg-gradient-to-r ${headerColorMap[cat.color]} mb-4`}
+                className={`inline-flex items-center px-3 py-1 rounded-none bg-gradient-to-r ${headerColorMap[cat.color]} mb-4`}
               >
                 <span className="text-white text-xs font-bold uppercase tracking-wider">
                   {cat.label}
@@ -103,7 +103,7 @@ const SkillsComponent = () => {
                 {cat.skills.map((skill) => (
                   <span
                     key={skill}
-                    className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-colors cursor-default ${colorMap[cat.color]}`}
+                    className={`px-3 py-1 rounded-none text-xs font-semibold border transition-colors cursor-default ${colorMap[cat.color]}`}
                   >
                     {skill}
                   </span>

@@ -79,18 +79,18 @@ const ExperienceComponent = () => {
               >
                 {/* Timeline dot */}
                 <div
-                  className={`hidden md:flex flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br ${exp.color} items-center justify-center shadow-lg z-10`}
+                  className={`hidden md:flex flex-shrink-0 w-10 h-10 rounded-none bg-gradient-to-br ${exp.color} items-center justify-center shadow-lg z-10`}
                 >
                   <FiBriefcase className="w-4 h-4 text-white" />
                 </div>
 
                 {/* Card */}
-                <div className="flex-1 glass-card rounded-2xl p-6 hover:shadow-xl hover:shadow-indigo-100 transition-all duration-300 hover:-translate-y-0.5">
+                <div className="flex-1 glass-card rounded-none p-6 hover:shadow-xl hover:shadow-indigo-500/20 transition-all duration-300 hover:-translate-y-0.5">
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
                     <div>
                       <div className="flex flex-wrap items-center gap-2 mb-1">
                         {exp.current && (
-                          <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded-full border border-green-200">
+                          <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded-none border border-green-200">
                             ● Current
                           </span>
                         )}
@@ -98,7 +98,7 @@ const ExperienceComponent = () => {
                           {exp.period}
                         </span>
                       </div>
-                      <h2 className="text-lg font-bold text-slate-900">
+                      <h2 className="text-lg font-bold text-white">
                         {exp.role}
                       </h2>
                       <p
@@ -107,15 +107,15 @@ const ExperienceComponent = () => {
                         {exp.company}
                       </p>
                     </div>
-                    <span className="inline-block px-3 py-1 bg-slate-50 text-slate-500 text-xs font-medium rounded-full border border-slate-100 self-start whitespace-nowrap">
+                    <span className="inline-block px-3 py-1 bg-slate-900 text-slate-400 text-xs font-medium rounded-none border border-white/10 self-start whitespace-nowrap">
                       {exp.location}
                     </span>
                   </div>
 
                   <ul className="space-y-2">
                     {exp.highlights.map((h, j) => (
-                      <li key={j} className="flex gap-3 text-sm text-slate-600">
-                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-indigo-400 flex-shrink-0" />
+                      <li key={j} className="flex gap-3 text-sm text-slate-400">
+                        <span className="mt-2 w-1.5 h-1.5 rounded-none bg-indigo-400 flex-shrink-0" />
                         {h}
                       </li>
                     ))}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { HiMenu, HiX } from "react-icons/hi";
 
@@ -37,19 +38,14 @@ const NavbarComponent = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled || mobileOpen
-          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100"
-          : "bg-white/80 backdrop-blur-sm border-b border-slate-100/60"
+          ? "bg-black backdrop-blur-md shadow-sm border-b border-white/10"
+          : "bg-black/90 backdrop-blur-sm border-b border-white/5"
       }`}
     >
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-sm group-hover:scale-110 transition-transform duration-200">
-            B
-          </div>
-          <span className="font-bold text-slate-800 text-sm hidden sm:block">
-            Botirjon<span className="text-indigo-600">.</span>
-          </span>
+          <Image src="/logos/logo.png" alt="Botirjon Logo" width={140} height={40} className="h-8 w-auto object-contain" priority />
         </Link>
 
         {/* Desktop links */}
@@ -60,10 +56,10 @@ const NavbarComponent = () => {
               <li key={href}>
                 <Link
                   href={href}
-                  className={`px-4 py-1.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  className={`px-4 py-1.5 rounded-none-none text-sm font-medium transition-all duration-200 border-b-2 ${
                     isActive
-                      ? "bg-indigo-50 text-indigo-600"
-                      : "text-slate-600 hover:text-indigo-600 hover:bg-slate-50"
+                      ? "border-indigo-500 text-indigo-400"
+                      : "border-transparent text-slate-400 hover:text-white hover:border-white/20"
                   }`}
                 >
                   {label}
@@ -76,7 +72,7 @@ const NavbarComponent = () => {
         {/* CTA */}
         <a
           href="mailto:shokirovbotirjon2003@gmail.com"
-          className="hidden md:inline-flex items-center px-5 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold rounded-xl hover:from-indigo-500 hover:to-purple-500 transition-all duration-200 shadow-md shadow-indigo-200 hover:-translate-y-0.5"
+          className="hidden md:inline-flex items-center px-5 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold rounded-none-none hover:from-indigo-500 hover:to-purple-500 transition-all duration-200 shadow-md shadow-indigo-500/20 hover:-translate-y-0.5"
         >
           Hire Me
         </a>
@@ -84,7 +80,7 @@ const NavbarComponent = () => {
         {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 transition-colors"
+          className="md:hidden w-10 h-10 flex items-center justify-center rounded-none-none text-slate-400 hover:bg-white/10 transition-colors"
           aria-label="Toggle menu"
         >
           {mobileOpen ? (
@@ -97,7 +93,7 @@ const NavbarComponent = () => {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden animate-slide-down bg-white/98 backdrop-blur-md border-b border-slate-100 px-6 py-4">
+        <div className="md:hidden animate-slide-down bg-slate-950/98 backdrop-blur-md border-b border-white/10 px-6 py-4">
           <ul className="flex flex-col gap-1">
             {NAV_LINKS.map(({ href, label }) => {
               const isActive = pathname === href;
@@ -105,10 +101,10 @@ const NavbarComponent = () => {
                 <li key={href}>
                   <Link
                     href={href}
-                    className={`block px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    className={`block px-4 py-2.5 rounded-none-none text-sm font-medium transition-all duration-200 border-b-2 ${
                       isActive
-                        ? "bg-indigo-50 text-indigo-600"
-                        : "text-slate-600 hover:text-indigo-600 hover:bg-slate-50"
+                        ? "border-indigo-500 text-indigo-400"
+                        : "border-transparent text-slate-400 hover:text-white hover:border-white/20"
                     }`}
                   >
                     {label}
@@ -119,7 +115,7 @@ const NavbarComponent = () => {
             <li className="mt-2">
               <a
                 href="mailto:shokirovbotirjon2003@gmail.com"
-                className="block px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl text-sm font-semibold text-center"
+                className="block px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-none-none text-sm font-semibold text-center"
               >
                 Hire Me
               </a>

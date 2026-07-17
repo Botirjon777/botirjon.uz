@@ -1,29 +1,34 @@
-import { projects } from "@/data/projects";
+import { getGithubRepo, getGithubReadme, getGithubRepos } from "@/lib/github";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FiGithub, FiExternalLink, FiArrowLeft } from "react-icons/fi";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const project = projects.find((p) => p.id === params.id);
+  const resolvedParams = await params;
+  const project = await getGithubRepo(resolvedParams.id);
   if (!project) return { title: "Project Not Found" };
   return {
     title: `${project.name} | Botirjon Shokirov`,
-    description: project.shortDescription,
+    description: project.description || "GitHub Repository",
   };
 }
 
 export async function generateStaticParams() {
-  return projects.map((p) => ({ id: p.id }));
+  const repos = await getGithubRepos();
+  return repos.map((p) => ({ id: p.name }));
 }
 
-export default function ProjectDetailPage({ params }: Props) {
-  const project = projects.find((p) => p.id === params.id);
+export default async function ProjectDetailPage({ params }: Props) {
+  const resolvedParams = await params;
+  const project = await getGithubRepo(resolvedParams.id);
   if (!project) notFound();
+
+  const readme = await getGithubReadme(resolvedParams.id);
 
   return (
     <main className="min-h-screen py-16">
@@ -37,36 +42,36 @@ export default function ProjectDetailPage({ params }: Props) {
           Back to Projects
         </Link>
 
-        <div className="glass-card rounded-3xl p-8 md:p-10">
+        <div className="glass-card rounded-none p-8 md:p-10">
           {/* Header */}
           <div className="flex items-start justify-between gap-4 mb-6">
             <div>
               <p className="text-xs font-semibold uppercase tracking-widest text-indigo-500 mb-2">
-                Project #{project.id}
+                GitHub Repository
               </p>
-              <h1 className="text-2xl md:text-3xl font-black text-slate-900 leading-tight">
+              <h1 className="text-2xl md:text-3xl font-black text-white leading-tight">
                 {project.name}
               </h1>
-              <p className="text-slate-500 mt-2">{project.shortDescription}</p>
+              <p className="text-slate-400 mt-2">{project.description || "No description provided."}</p>
             </div>
             <div className="flex gap-2 flex-shrink-0">
-              {project.githubUrl && (
+              {project.html_url && (
                 <a
-                  href={project.githubUrl}
+                  href={project.html_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 glass-card rounded-xl flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:border-indigo-200 transition-all"
+                  className="w-10 h-10 glass-card rounded-none flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:border-indigo-200 transition-all"
                   aria-label="GitHub"
                 >
                   <FiGithub className="w-5 h-5" />
                 </a>
               )}
-              {project.liveUrl && (
+              {project.homepage && (
                 <a
-                  href={project.liveUrl}
+                  href={project.homepage}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 glass-card rounded-xl flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:border-indigo-200 transition-all"
+                  className="w-10 h-10 glass-card rounded-none flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:border-indigo-200 transition-all"
                   aria-label="Live Demo"
                 >
                   <FiExternalLink className="w-5 h-5" />
@@ -76,62 +81,51 @@ export default function ProjectDetailPage({ params }: Props) {
           </div>
 
           {/* Divider */}
-          <div className="border-t border-slate-100 my-6" />
+          <div className="border-t border-white/10 my-6" />
 
-          {/* Description */}
-          <section className="mb-8">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">
-              Overview
-            </h2>
-            <p className="text-slate-700 leading-relaxed">
-              {project.description}
-            </p>
-          </section>
+          <div className="flex items-center gap-4 mb-6 text-sm text-slate-500">
+            <span className="flex items-center gap-1">
+              <span className="font-semibold text-slate-300">Stars:</span> {project.stargazers_count}
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="font-semibold text-slate-300">Language:</span> {project.language || "N/A"}
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="font-semibold text-slate-300">Updated:</span> {new Date(project.updated_at).toLocaleDateString()}
+            </span>
+          </div>
 
-          {/* Features */}
-          <section className="mb-8">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">
-              Key Features
-            </h2>
-            <ul className="space-y-2">
-              {project.features.map((f, i) => (
-                <li key={i} className="flex gap-3 text-slate-700">
-                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0" />
-                  {f}
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {/* Challenges */}
-          {project.challenges && (
+          {/* Technologies */}
+          {project.topics && project.topics.length > 0 && (
             <section className="mb-8">
               <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">
-                Challenges & Solutions
+                Topics
               </h2>
-              <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-5">
-                <p className="text-slate-700 leading-relaxed">
-                  {project.challenges}
-                </p>
+              <div className="flex flex-wrap gap-2">
+                {project.topics.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-none text-sm font-semibold border border-indigo-100"
+                  >
+                    {tech}
+                  </span>
+                ))}
               </div>
             </section>
           )}
 
-          {/* Technologies */}
+          {/* Readme Section */}
           <section>
-            <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">
-              Technologies
+            <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 border-b border-white/10 pb-2">
+              README
             </h2>
-            <div className="flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-xl text-sm font-semibold border border-indigo-100"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
+            {readme ? (
+              <div className="prose prose-invert max-w-none text-slate-300 prose-a:text-indigo-400 hover:prose-a:text-indigo-300">
+                <pre className="whitespace-pre-wrap font-sans text-sm">{readme}</pre>
+              </div>
+            ) : (
+              <p className="text-slate-500 italic">No README.md found in this repository.</p>
+            )}
           </section>
         </div>
       </div>

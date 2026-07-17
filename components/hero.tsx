@@ -15,7 +15,7 @@ import {
   FiExternalLink,
 } from "react-icons/fi";
 import { FaTelegramPlane } from "react-icons/fa";
-import { projects } from "@/data/projects";
+import { type GithubRepo } from "@/lib/github";
 import ServicesComponent from "@/components/services";
 import { useReveal } from "@/hooks/use-reveal";
 
@@ -108,7 +108,7 @@ function Typewriter() {
 }
 
 /* ─── Main landing component ─────────────────────────── */
-const HeroComponent = () => {
+const HeroComponent = ({ featuredRepos }: { featuredRepos: GithubRepo[] }) => {
   useReveal();
 
   const [experience, setExperience] = useState("3.2");
@@ -117,31 +117,17 @@ const HeroComponent = () => {
     setExperience((diff / (1000 * 60 * 60 * 24 * 365.25)).toFixed(1));
   }, []);
 
-  const featuredProjects = projects.filter((p) =>
-    ["006", "009", "007"].includes(p.id),
-  );
-
   return (
     <>
       {/* ═══ 1. HERO ════════════════════════════════════════ */}
-      <section className="relative min-h-[calc(100vh-4rem)] flex items-center overflow-hidden bg-gradient-to-br from-slate-50 via-indigo-50/40 to-purple-50/30">
-        {/* Floating blobs */}
-        <div className="absolute top-16 right-8 w-80 h-80 rounded-full bg-gradient-to-br from-indigo-300/30 to-purple-300/20 blur-3xl animate-float pointer-events-none" />
-        <div className="absolute bottom-12 left-4 w-96 h-96 rounded-full bg-gradient-to-tr from-violet-200/30 to-indigo-100/20 blur-3xl animate-float-reverse pointer-events-none" />
-        {/* Spinning ring */}
-        <div className="absolute top-10 right-10 w-64 h-64 rounded-full border border-indigo-200/40 animate-spin-slow pointer-events-none" />
+      <section className="relative min-h-[calc(100vh-4rem)] flex items-center overflow-hidden bg-slate-950">
+        {/* Developer Grid pattern */}
         <div
-          className="absolute top-16 right-16 w-52 h-52 rounded-full border border-purple-200/30 animate-spin-slow pointer-events-none"
-          style={{ animationDirection: "reverse", animationDuration: "18s" }}
-        />
-
-        {/* Dot grid pattern */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.025]"
+          className="absolute inset-0 pointer-events-none opacity-[0.15]"
           style={{
             backgroundImage:
-              "radial-gradient(circle, #6366f1 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
+              "linear-gradient(to right, #6366f1 1px, transparent 1px), linear-gradient(to bottom, #6366f1 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
           }}
         />
 
@@ -149,27 +135,27 @@ const HeroComponent = () => {
           <div className="flex flex-col lg:flex-row items-center gap-12">
             {/* Text */}
             <div className="flex-1 text-center lg:text-left">
-              <div className="animate-fade-in-up delay-100 inline-flex items-center gap-2 bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <div className="animate-fade-in-up delay-100 inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-none-none mb-6 backdrop-blur-md">
+                <span className="w-2 h-2 rounded-none-none bg-green-400 animate-pulse" />
                 Available for new opportunities
               </div>
 
-              <h1 className="animate-fade-in-up delay-200 text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] text-slate-900 mb-4">
+              <h1 className="animate-fade-in-up delay-200 text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] text-white mb-4">
                 Hi, I&apos;m <span className="gradient-text">Botirjon</span>
-                <span className="text-slate-300">.</span>
+                <span className="text-slate-400">.</span>
               </h1>
 
-              <div className="animate-fade-in-up delay-300 text-xl sm:text-2xl text-slate-600 font-medium mb-6 min-h-[2rem]">
+              <div className="animate-fade-in-up delay-300 text-xl sm:text-2xl text-slate-300 font-medium mb-6 min-h-[2rem]">
                 <Typewriter />
               </div>
 
-              <p className="animate-fade-in-up delay-400 text-slate-500 text-base sm:text-lg max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed">
+              <p className="animate-fade-in-up delay-400 text-slate-400 text-base sm:text-lg max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed">
                 Based in{" "}
-                <span className="text-indigo-600 font-semibold">
+                <span className="text-indigo-400 font-semibold">
                   Uzbekistan
                 </span>{" "}
                 with{" "}
-                <span className="text-indigo-600 font-semibold">
+                <span className="text-indigo-400 font-semibold">
                   {experience}+ years
                 </span>{" "}
                 of experience building real-world web applications, APIs, and
@@ -179,14 +165,14 @@ const HeroComponent = () => {
               <div className="animate-fade-in-up delay-500 flex flex-wrap gap-4 justify-center lg:justify-start mb-10">
                 <Link
                   href="/projects"
-                  className="group flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-2xl shadow-lg shadow-indigo-200 hover:shadow-indigo-300 hover:-translate-y-0.5 transition-all duration-300"
+                  className="group flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-none-none shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:-translate-y-0.5 transition-all duration-300"
                 >
                   See My Work
                   <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   href="/contact"
-                  className="px-7 py-3.5 bg-white text-slate-700 font-semibold rounded-2xl border-2 border-slate-200 hover:border-indigo-300 hover:text-indigo-600 hover:-translate-y-0.5 transition-all duration-300"
+                  className="px-7 py-3.5 bg-slate-900 text-slate-300 font-semibold rounded-none-none border border-white/10 hover:bg-slate-800 hover:text-white hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm"
                 >
                   Contact Me
                 </Link>
@@ -221,7 +207,7 @@ const HeroComponent = () => {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-11 h-11 glass-card rounded-xl flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:border-indigo-200 hover:-translate-y-1 transition-all duration-300"
+                    className="w-11 h-11 rounded-none-none flex items-center justify-center text-slate-400 bg-slate-900 border border-white/10 hover:text-indigo-400 hover:border-indigo-500/50 hover:-translate-y-1 transition-all duration-300 backdrop-blur-sm"
                   >
                     <Icon className="w-5 h-5" />
                   </a>
@@ -243,12 +229,12 @@ const HeroComponent = () => {
               ].map(({ end, suffix, label }) => (
                 <div
                   key={label}
-                  className="glass-card rounded-2xl p-5 text-center hover:-translate-y-1 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-100"
+                  className="bg-slate-900 border border-white/10 backdrop-blur-md rounded-none-none p-5 text-center hover:-translate-y-1 transition-all duration-300 hover:border-indigo-500/50 hover:bg-slate-800"
                 >
                   <p className="text-2xl font-black gradient-text">
                     <AnimatedCounter end={end} suffix={suffix} />
                   </p>
-                  <p className="text-xs text-slate-500 mt-1 font-medium leading-tight">
+                  <p className="text-xs text-slate-400 mt-1 font-medium leading-tight">
                     {label}
                   </p>
                 </div>
@@ -267,13 +253,13 @@ const HeroComponent = () => {
       </section>
 
       {/* ═══ 2. "WHAT I DO" STRIP ═══════════════════════════ */}
-      <section className="py-24 bg-white relative overflow-hidden">
+      <section className="py-24 bg-slate-950 relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16 reveal">
             <p className="text-indigo-500 text-xs font-bold uppercase tracking-widest mb-3">
               What I Do
             </p>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
+            <h2 className="text-3xl sm:text-4xl font-black text-white">
               Full-stack &amp; beyond
             </h2>
           </div>
@@ -308,7 +294,7 @@ const HeroComponent = () => {
                 violet: "from-violet-500 to-violet-700",
               };
               const bgMap: Record<string, string> = {
-                indigo: "hover:border-indigo-200 hover:shadow-indigo-100",
+                indigo: "hover:border-indigo-200 hover:shadow-indigo-500/20",
                 purple: "hover:border-purple-200 hover:shadow-purple-100",
                 violet: "hover:border-violet-200 hover:shadow-violet-100",
               };
@@ -320,25 +306,25 @@ const HeroComponent = () => {
               return (
                 <div
                   key={title}
-                  className={`reveal glass-card rounded-2xl p-7 hover:-translate-y-1 transition-all duration-300 hover:shadow-xl ${bgMap[color]}`}
+                  className={`reveal glass-card rounded-none p-7 hover:-translate-y-1 transition-all duration-300 hover:shadow-xl ${bgMap[color]}`}
                   style={{ transitionDelay: `${i * 0.1}s` }}
                 >
                   <div
-                    className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradMap[color]} flex items-center justify-center mb-5 shadow-md`}
+                    className={`w-12 h-12 rounded-none bg-gradient-to-br ${gradMap[color]} flex items-center justify-center mb-5 shadow-md`}
                   >
                     <Icon className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2">
+                  <h3 className="text-lg font-bold text-white mb-2">
                     {title}
                   </h3>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-4">
+                  <p className="text-slate-400 text-sm leading-relaxed mb-4">
                     {desc}
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {tags.map((t) => (
                       <span
                         key={t}
-                        className={`px-2 py-0.5 rounded-md text-[11px] font-semibold border ${tagMap[color]}`}
+                        className={`px-2 py-0.5 rounded-none text-[11px] font-semibold border ${tagMap[color]}`}
                       >
                         {t}
                       </span>
@@ -354,8 +340,8 @@ const HeroComponent = () => {
       {/* ═══ 3. EXPERIENCE BANNER ════════════════════════════ */}
       <section className="py-20 bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 animate-gradient relative overflow-hidden">
         {/* Background noise rings */}
-        <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-white/5 pointer-events-none" />
-        <div className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-white/5 pointer-events-none" />
+        <div className="absolute -top-20 -left-20 w-72 h-72 rounded-none bg-slate-950/5 pointer-events-none" />
+        <div className="absolute -bottom-20 -right-20 w-96 h-96 rounded-none bg-slate-950/5 pointer-events-none" />
 
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
@@ -377,19 +363,19 @@ const HeroComponent = () => {
       </section>
 
       {/* ═══ 4. WHY HIRE ME ══════════════════════════════════ */}
-      <section className="py-24 bg-[#f8faff]">
+      <section className="py-24 bg-slate-900">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div className="reveal-left">
               <p className="text-indigo-500 text-xs font-bold uppercase tracking-widest mb-3">
                 Why choose me
               </p>
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-6 leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-black text-white mb-6 leading-tight">
                 I deliver results,
                 <br />
                 <span className="gradient-text">not just code</span>
               </h2>
-              <p className="text-slate-500 leading-relaxed mb-8">
+              <p className="text-slate-400 leading-relaxed mb-8">
                 From backend APIs to ML systems and polished UIs, I own every
                 layer of the stack. I&apos;ve worked independently and in teams
                 — shipping on time, communicating proactively, and always
@@ -406,7 +392,7 @@ const HeroComponent = () => {
                 ].map((point) => (
                   <div key={point} className="flex items-start gap-3">
                     <FiCheckCircle className="w-5 h-5 text-indigo-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-700 text-sm">{point}</span>
+                    <span className="text-slate-300 text-sm">{point}</span>
                   </div>
                 ))}
               </div>
@@ -471,14 +457,14 @@ const HeroComponent = () => {
       </section>
 
       {/* ═══ 5. FEATURED PROJECTS ════════════════════════════ */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-slate-950">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-end justify-between mb-12 reveal">
             <div>
               <p className="text-indigo-500 text-xs font-bold uppercase tracking-widest mb-2">
                 Recent Work
               </p>
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
+              <h2 className="text-3xl sm:text-4xl font-black text-white">
                 Featured Projects
               </h2>
             </div>
@@ -492,10 +478,10 @@ const HeroComponent = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredProjects.map((p, i) => (
+            {featuredRepos.map((p, i) => (
               <div
                 key={p.id}
-                className="reveal glass-card rounded-2xl p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-100 transition-all duration-300 flex flex-col"
+                className="reveal glass-card rounded-none p-7 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/20 transition-all duration-300 flex flex-col"
                 style={{ transitionDelay: `${i * 0.1}s` }}
               >
                 <div className="flex items-start justify-between mb-4">
@@ -503,51 +489,54 @@ const HeroComponent = () => {
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="flex gap-2">
-                    {p.githubUrl && (
+                    {p.html_url && (
                       <a
-                        href={p.githubUrl}
+                        href={p.html_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-9 h-9 glass-card rounded-xl flex items-center justify-center text-slate-500 hover:text-indigo-600 transition-colors"
+                        className="w-9 h-9 glass-card rounded-none flex items-center justify-center text-slate-400 hover:text-indigo-600 transition-colors"
                       >
                         <FiGithub className="w-4 h-4" />
                       </a>
                     )}
-                    {p.liveUrl && (
+                    {p.homepage && (
                       <a
-                        href={p.liveUrl}
+                        href={p.homepage}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-9 h-9 glass-card rounded-xl flex items-center justify-center text-slate-500 hover:text-indigo-600 transition-colors"
+                        className="w-9 h-9 glass-card rounded-none flex items-center justify-center text-slate-400 hover:text-indigo-600 transition-colors"
                       >
                         <FiExternalLink className="w-4 h-4" />
                       </a>
                     )}
                   </div>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">
+                <h3 className="text-lg font-bold text-white mb-2">
                   {p.name}
                 </h3>
-                <p className="text-sm text-slate-500 mb-4 flex-1 leading-relaxed">
-                  {p.shortDescription}
+                <p className="text-sm text-slate-400 mb-4 flex-1 leading-relaxed">
+                  {p.description || "No description provided."}
                 </p>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {p.technologies.map((t) => (
+                  {p.topics?.map((t) => (
                     <span
                       key={t}
-                      className="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-semibold border border-indigo-100"
+                      className="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-none text-xs font-semibold border border-indigo-100"
                     >
                       {t}
                     </span>
                   ))}
                 </div>
-                <Link
-                  href={`/projects/${p.id}`}
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-800 group border-t border-slate-100 pt-4"
-                >
-                  View Details
-                  <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                <div className="flex items-center justify-between border-t border-white/10 pt-4">
+                  <Link
+                    href={`/projects/${p.name}`}
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-800 group"
+                  >
+                    View Details
+                    <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <span className="text-xs text-slate-500">Updated: {new Date(p.updated_at).toLocaleDateString()}</span>
+                </div>
               </div>
             ))}
           </div>
@@ -568,7 +557,7 @@ const HeroComponent = () => {
       <ServicesComponent />
 
       {/* ═══ 6. TECH MARQUEE ══════════════════════════════════ */}
-      <section className="py-14 bg-[#f8faff] overflow-hidden border-y border-slate-100">
+      <section className="py-14 bg-slate-900 overflow-hidden border-y border-white/10">
         <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-8 reveal">
           Technologies I work with
         </p>
@@ -614,7 +603,7 @@ const HeroComponent = () => {
           ].map((t, i) => (
             <span
               key={i}
-              className="inline-block px-4 py-2 glass-card rounded-full text-sm font-semibold text-slate-600 border border-slate-100 flex-shrink-0"
+              className="inline-block px-4 py-2 glass-card rounded-none text-sm font-semibold text-slate-400 border border-white/10 flex-shrink-0"
             >
               {t}
             </span>
@@ -629,31 +618,31 @@ const HeroComponent = () => {
       </section>
 
       {/* ═══ 7. FINAL CTA ════════════════════════════════════ */}
-      <section className="py-28 bg-white">
+      <section className="py-28 bg-slate-950">
         <div className="max-w-3xl mx-auto px-6 text-center reveal">
-          <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center mb-8 shadow-xl shadow-indigo-200 animate-float">
+          <div className="w-16 h-16 mx-auto rounded-none bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center mb-8 shadow-xl shadow-indigo-500/20 animate-float">
             <span className="text-white text-2xl font-black">B</span>
           </div>
-          <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mb-4 leading-tight">
+          <h2 className="text-4xl sm:text-5xl font-black text-white mb-4 leading-tight">
             Let&apos;s build something
             <br />
             <span className="gradient-text">great together</span>
           </h2>
-          <p className="text-slate-500 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+          <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
             I&apos;m open to new roles, freelance projects, and collaborations.
             Drop me a line and let&apos;s make it happen.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="group flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 hover:shadow-indigo-300 hover:-translate-y-0.5 transition-all duration-300 text-base"
+              className="group flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-none shadow-lg shadow-indigo-500/20 hover:shadow-indigo-300 hover:-translate-y-0.5 transition-all duration-300 text-base"
             >
               Get In Touch
               <FiArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/projects"
-              className="flex items-center justify-center gap-2 px-8 py-4 bg-white text-slate-700 font-bold rounded-2xl border-2 border-slate-200 hover:border-indigo-300 hover:text-indigo-600 hover:-translate-y-0.5 transition-all duration-300 text-base"
+              className="flex items-center justify-center gap-2 px-8 py-4 bg-slate-950 text-slate-300 font-bold rounded-none border-2 border-white/20 hover:border-indigo-300 hover:text-indigo-600 hover:-translate-y-0.5 transition-all duration-300 text-base"
             >
               View My Work
             </Link>
@@ -696,12 +685,12 @@ function SkillBar({
   return (
     <div ref={ref}>
       <div className="flex justify-between mb-1.5">
-        <span className="text-sm font-semibold text-slate-700">{label}</span>
+        <span className="text-sm font-semibold text-slate-300">{label}</span>
         <span className="text-sm font-bold text-indigo-600">{level}%</span>
       </div>
-      <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden">
+      <div className="h-2.5 bg-white/10 rounded-none overflow-hidden">
         <div
-          className={`h-full rounded-full bg-gradient-to-r ${color} transition-all duration-1000 ease-out`}
+          className={`h-full rounded-none bg-gradient-to-r ${color} transition-all duration-1000 ease-out`}
           style={{ width: `${width}%` }}
         />
       </div>

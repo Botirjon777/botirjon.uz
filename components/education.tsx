@@ -27,14 +27,14 @@ const EducationComponent = () => {
         </div>
 
         <div className="max-w-2xl animate-fade-in-up">
-          <div className="glass-card rounded-3xl p-8 hover:shadow-xl hover:shadow-indigo-100 transition-all duration-300">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center mb-6 shadow-lg shadow-indigo-200">
+          <div className="glass-card rounded-none p-8 hover:shadow-xl hover:shadow-indigo-500/20 transition-all duration-300">
+            <div className="w-14 h-14 rounded-none bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center mb-6 shadow-lg shadow-indigo-500/20">
               <HiAcademicCap className="w-7 h-7 text-white" />
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
               <div>
-                <h2 className="text-xl font-bold text-slate-900">
+                <h2 className="text-xl font-bold text-white">
                   University of Economics and Humanities
                 </h2>
                 <p className="text-indigo-600 font-semibold mt-1">
@@ -42,14 +42,14 @@ const EducationComponent = () => {
                 </p>
               </div>
               <div className="text-right flex-shrink-0">
-                <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 text-xs font-semibold rounded-full border border-indigo-100">
+                <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 text-xs font-semibold rounded-none border border-indigo-100">
                   Mar 2022 – Feb 2026
                 </span>
                 <p className="text-sm text-slate-400 mt-1">Warsaw, Poland</p>
               </div>
             </div>
 
-            <div className="border-t border-slate-100 pt-6">
+            <div className="border-t border-white/10 pt-6">
               <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
                 Relevant Courses
               </p>
@@ -57,7 +57,7 @@ const EducationComponent = () => {
                 {courses.map((course) => (
                   <span
                     key={course}
-                    className="px-3 py-1 bg-purple-50 text-purple-700 rounded-lg text-xs font-medium border border-purple-100 hover:bg-purple-100 transition-colors cursor-default"
+                    className="px-3 py-1 bg-purple-50 text-purple-700 rounded-none text-xs font-medium border border-purple-100 hover:bg-purple-100 transition-colors cursor-default"
                   >
                     {course}
                   </span>

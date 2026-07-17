@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { FiGithub, FiLinkedin, FiInstagram, FiMail } from "react-icons/fi";
 import { BsHeart } from "react-icons/bs";
 
@@ -8,17 +9,12 @@ const FooterComponent = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-white border-t border-slate-100 py-10">
+    <footer className="bg-black border-t border-white/10 py-10">
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-xs">
-              B
-            </div>
-            <span className="font-bold text-slate-700 text-sm">
-              Botirjon<span className="text-indigo-600">.</span>
-            </span>
+            <Image src="/logos/logo.png" alt="Botirjon Logo" width={140} height={40} className="h-8 w-auto object-contain hover:opacity-80 transition-all duration-300" />
           </Link>
 
           {/* Copyright */}
@@ -46,7 +42,7 @@ const FooterComponent = () => {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:border-indigo-200 hover:bg-indigo-50 transition-all duration-200"
+                className="w-8 h-8 rounded-none bg-slate-900 border border-white/10 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:border-indigo-200 hover:bg-indigo-50 transition-all duration-200"
               >
                 <Icon className="w-4 h-4" />
               </a>
