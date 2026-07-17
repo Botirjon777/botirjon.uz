@@ -20,8 +20,8 @@ html {
 
 body {
   font-family: var(--font-inter), sans-serif;
-  background-color: #f8faff;
-  color: #1e293b;
+  background-color: #020617; /* slate-950 */
+  color: #f1f5f9; /* slate-100 */
   -webkit-font-smoothing: antialiased;
 }
 
@@ -34,10 +34,10 @@ body {
   }
 
   .glass-card {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(99, 102, 241, 0.1);
-    box-shadow: 0 4px 24px rgba(99, 102, 241, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
   }
 
   .section-container {
@@ -141,6 +141,16 @@ body {
 .animate-spin-slow     { animation: spin-slow 12s linear infinite; }
 .animate-gradient      { animation: gradientShift 5s ease infinite; background-size: 300% 300%; }
 .animate-counter-in    { animation: counter-in 0.6s ease both; }
+
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+.animate-blob { animation: blob 10s infinite alternate; }
+.animation-delay-2000 { animation-delay: 2s; }
+.animation-delay-4000 { animation-delay: 4s; }
 
 /* Scroll-reveal: elements start hidden, .is-visible triggers the animation */
 .reveal {

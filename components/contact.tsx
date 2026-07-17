@@ -36,11 +36,11 @@ const ContactComponent = () => {
       <div className="max-w-5xl mx-auto px-6">
         <div className="max-w-2xl mx-auto">
           <div className="animate-fade-in-up text-center mb-12">
-            <h2 className="text-4xl font-bold text-slate-900 mb-6">
+            <h2 className="text-4xl font-bold text-white mb-6">
               Let&apos;s build something{" "}
               <span className="gradient-text">great together</span>
             </h2>
-            <p className="text-lg text-slate-500 leading-relaxed mb-10 max-w-lg mx-auto">
+            <p className="text-lg text-slate-400 leading-relaxed mb-10 max-w-lg mx-auto">
               I am most active on Telegram and Instagram. Feel free to reach out
               for collaborations, projects, or just to say hi!
             </p>
@@ -52,10 +52,10 @@ const ContactComponent = () => {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex items-center gap-4 p-5 rounded-2xl border ${bg} hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 group`}
+                  className={`flex items-center gap-4 p-5 rounded-none border ${bg} hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 group`}
                 >
                   <div
-                    className={`w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm ${color}`}
+                    className={`w-12 h-12 rounded-none bg-slate-950 flex items-center justify-center shadow-sm ${color}`}
                   >
                     <Icon className="w-6 h-6" />
                   </div>

@@ -5,7 +5,7 @@ export default function BlogPage() {
   return (
     <main className="min-h-screen py-24 px-6">
       <div className="max-w-3xl mx-auto text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 mb-8">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-none bg-slate-900 text-indigo-400 mb-8">
           <svg
             className="w-8 h-8"
             fill="none"
@@ -33,18 +33,18 @@ export default function BlogPage() {
           </svg>
         </div>
 
-        <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
           Blog <span className="gradient-text">Coming Soon</span>
         </h1>
 
-        <p className="text-lg text-slate-500 mb-12 leading-relaxed max-w-xl mx-auto">
+        <p className="text-lg text-slate-400 mb-12 leading-relaxed max-w-xl mx-auto">
           I'm working on some interesting articles about software development,
           AI, and 3D web technologies. Stay tuned for updates!
         </p>
 
         <Link
           href="/"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-600 font-semibold rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 shadow-sm"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 border border-white/10 text-slate-300 font-semibold rounded-none hover:bg-slate-800 hover:text-white hover:border-white/20 transition-all duration-200 shadow-sm"
         >
           <FiArrowLeft className="w-4 h-4" />
           Back to Home

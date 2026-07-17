@@ -42,34 +42,34 @@ const AboutComponent = () => {
           <div className="flex flex-col items-center md:items-start gap-8 animate-fade-in-up">
             {/* Avatar */}
             <div className="relative">
-              <div className="w-48 h-48 rounded-3xl bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center shadow-xl shadow-indigo-100">
+              <div className="w-48 h-48 rounded-none bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center shadow-xl shadow-indigo-500/20">
                 <span className="text-8xl font-black gradient-text select-none">
                   B
                 </span>
               </div>
-              <div className="absolute -bottom-2 -right-2 flex items-center gap-1.5 bg-white rounded-full px-3 py-1.5 shadow-md border border-slate-100 text-xs font-semibold text-green-600">
-                <span className="w-2 h-2 rounded-full bg-green-500 inline-block animate-pulse" />
+              <div className="absolute -bottom-2 -right-2 flex items-center gap-1.5 bg-slate-950 rounded-none px-3 py-1.5 shadow-md border border-white/10 text-xs font-semibold text-green-600">
+                <span className="w-2 h-2 rounded-none bg-green-500 inline-block animate-pulse" />
                 Available for work
               </div>
             </div>
 
             {/* Quick info */}
             <div className="flex flex-col gap-3 w-full max-w-xs">
-              <div className="flex items-center gap-3 glass-card rounded-xl px-4 py-3">
+              <div className="flex items-center gap-3 glass-card rounded-none px-4 py-3">
                 <FiMapPin className="w-4 h-4 text-indigo-500 flex-shrink-0" />
-                <span className="text-sm text-slate-700 font-medium">
+                <span className="text-sm text-slate-300 font-medium">
                   Uzbekistan
                 </span>
               </div>
-              <div className="flex items-center gap-3 glass-card rounded-xl px-4 py-3">
+              <div className="flex items-center gap-3 glass-card rounded-none px-4 py-3">
                 <FiCalendar className="w-4 h-4 text-purple-500 flex-shrink-0" />
-                <span className="text-sm text-slate-700 font-medium">
+                <span className="text-sm text-slate-300 font-medium">
                   {experience} years of experience
                 </span>
               </div>
-              <div className="flex items-center gap-3 glass-card rounded-xl px-4 py-3">
+              <div className="flex items-center gap-3 glass-card rounded-none px-4 py-3">
                 <FiCode className="w-4 h-4 text-violet-500 flex-shrink-0" />
-                <span className="text-sm text-slate-700 font-medium">
+                <span className="text-sm text-slate-300 font-medium">
                   Full-Stack Developer
                 </span>
               </div>
@@ -78,11 +78,11 @@ const AboutComponent = () => {
 
           {/* Right: bio */}
           <div className="animate-fade-in-up delay-200">
-            <h2 className="text-2xl font-bold text-slate-900 mb-4">
+            <h2 className="text-2xl font-bold text-white mb-4">
               Building software that{" "}
               <span className="gradient-text">matters</span>
             </h2>
-            <p className="text-slate-600 leading-relaxed mb-4">
+            <p className="text-slate-400 leading-relaxed mb-4">
               I&apos;m a Software Engineer based in{" "}
               <span className="text-indigo-600 font-medium">Uzbekistan</span>,
               passionate about turning ideas into real-world solutions. I
@@ -90,7 +90,7 @@ const AboutComponent = () => {
               working as a freelancer — delivering clean, performant software
               across the full stack.
             </p>
-            <p className="text-slate-600 leading-relaxed mb-4">
+            <p className="text-slate-400 leading-relaxed mb-4">
               I specialize in{" "}
               <span className="text-indigo-600 font-medium">
                 full-stack development
@@ -98,7 +98,7 @@ const AboutComponent = () => {
               , REST API design, and database management with{" "}
               <span className="text-purple-600 font-medium">Prisma ORM</span>.
             </p>
-            <p className="text-slate-600 leading-relaxed mb-8">
+            <p className="text-slate-400 leading-relaxed mb-8">
               I have a strong academic background in Computer Science covering
               Machine Learning, Cloud Web Applications, and Artificial
               Intelligence. Outside of work, I enjoy chess, ping pong, and
@@ -114,7 +114,7 @@ const AboutComponent = () => {
                 {techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-semibold border border-indigo-100 hover:bg-indigo-100 transition-colors cursor-default"
+                    className="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-none text-xs font-semibold border border-indigo-100 hover:bg-indigo-100 transition-colors cursor-default"
                   >
                     {tech}
                   </span>

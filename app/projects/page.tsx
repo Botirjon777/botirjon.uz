@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   description: "Software projects built by Botirjon Shokirov.",
 };
 
-export default function ProjectsPage() {
-  return <ProjectsComponent />;
+import { getGithubRepos } from "@/lib/github";
+
+export default async function ProjectsPage() {
+  const repos = await getGithubRepos();
+  return <ProjectsComponent repos={repos} />;
 }

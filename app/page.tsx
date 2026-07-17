@@ -1,12 +1,9 @@
-import type { Metadata } from "next";
 import HeroComponent from "@/components/hero";
+import { getGithubRepos } from "@/lib/github";
 
-export const metadata: Metadata = {
-  title: "Botirjon Shokirov | Software Engineer",
-  description:
-    "Software Engineer based in Uzbekistan — JavaScript, TypeScript, Python.",
-};
-
-export default function HomePage() {
-  return <HeroComponent />;
+export default async function HomePage() {
+  const repos = await getGithubRepos();
+  // Get the 3 most recently updated active repositories
+  const featuredRepos = repos.slice(0, 3);
+  return <HeroComponent featuredRepos={featuredRepos} />;
 }

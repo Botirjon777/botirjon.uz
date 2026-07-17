@@ -54,7 +54,7 @@ const ProjectDetailComponent: React.FC<ProjectDetailComponentProps> = ({ project
         <h3 className="text-green-400 mb-1">Technologies:</h3>
         <div className="flex flex-wrap gap-2">
           {project.technologies.map((tech, index) => (
-            <span key={index} className="px-2 py-1 bg-gray-800 text-blue-300 rounded text-sm">
+            <span key={index} className="px-2 py-1 bg-gray-800 text-blue-300 rounded-none text-sm">
               {tech}
             </span>
           ))}
@@ -64,7 +64,7 @@ const ProjectDetailComponent: React.FC<ProjectDetailComponentProps> = ({ project
       {project.challenges && (
         <div className="mb-3">
           <h3 className="text-green-400 mb-1">Challenges & Solutions:</h3>
-          <div className="text-gray-300 bg-gray-800 p-2 rounded">{project.challenges}</div>
+          <div className="text-gray-300 bg-gray-800 p-2 rounded-none">{project.challenges}</div>
         </div>
       )}
     </div>
