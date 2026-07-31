@@ -4,6 +4,9 @@ import SkillsComponent from "@/components/skills";
 export const metadata: Metadata = {
   title: "Skills | Botirjon Shokirov",
   description: "Technical skills and technologies used by Botirjon Shokirov.",
+  alternates: {
+    canonical: "/skills",
+  },
 };
 
 export default function SkillsPage() {

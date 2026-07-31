@@ -12,6 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://botirjon.uz"),
   title: "Botirjon Shokirov | Full Stack Software Engineer",
   description:
     "Botirjon Shokirov is a Software Engineer based in Uzbekistan specializing in full-stack web development with JavaScript, TypeScript, React, Next.js, and Python.",

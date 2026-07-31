@@ -1,5 +1,12 @@
 import HeroComponent from "@/components/hero";
 import { getGithubRepos } from "@/lib/github";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default async function HomePage() {
   const repos = await getGithubRepos();

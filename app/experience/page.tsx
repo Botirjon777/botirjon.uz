@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Experience | Botirjon Shokirov",
   description:
     "Professional experience of Botirjon Shokirov, Software Engineer.",
+  alternates: {
+    canonical: "/experience",
+  },
 };
 
 export default function ExperiencePage() {
