@@ -1,5 +1,14 @@
 import Link from "next/link";
 import { FiArrowLeft } from "react-icons/fi";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog | Botirjon Shokirov",
+  description: "Read technical articles on software engineering, web development, and AI by Botirjon Shokirov.",
+  alternates: {
+    canonical: "/blog",
+  },
+};
 
 export default function BlogPage() {
   return (

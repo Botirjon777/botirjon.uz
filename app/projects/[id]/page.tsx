@@ -15,6 +15,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${project.name} | Botirjon Shokirov`,
     description: project.description || "GitHub Repository",
+    alternates: {
+      canonical: `/projects/${resolvedParams.id}`,
+    },
   };
 }
 

@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { projects } from "@/data/projects";
+import { getGithubRepos } from "@/lib/github";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://botirjon.uz";
@@ -23,9 +23,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // Dynamic project routes
-  const projectRoutes = projects.map((project) => ({
-    url: `${baseUrl}/projects/${project.id}`,
-    lastModified: new Date(),
+  const repos = await getGithubRepos();
+  const projectRoutes = repos.map((repo) => ({
+    url: `${baseUrl}/projects/${repo.name}`,
+    lastModified: new Date(repo.updated_at),
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
