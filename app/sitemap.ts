@@ -1,36 +1,28 @@
-import { MetadataRoute } from "next";
-import { getGithubRepos } from "@/lib/github";
+import type { MetadataRoute } from "next";
+import { posts } from "@/content/blog";
+import { locales, localeTags } from "@/i18n/config";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://botirjon.uz";
+const BASE = "https://botirjon.uz";
 
-  // Static routes
-  const staticRoutes = [
-    "",
-    "/about",
-    "/blog",
-    "/contact",
-    "/privacy",
-    "/education",
-    "/experience",
-    "/projects",
-    "/services",
-    "/skills",
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: route === "" ? 1.0 : 0.8,
-  }));
+const PAGES = ["", "/projects", "/about", "/experience", "/education", "/services", "/skills", "/blog", "/contact"];
 
-  // Dynamic project routes
-  const repos = await getGithubRepos();
-  const projectRoutes = repos.map((repo) => ({
-    url: `${baseUrl}/projects/${repo.name}`,
-    lastModified: new Date(repo.updated_at),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+/** One entry per page per language, each listing its translations. */
+export default function sitemap(): MetadataRoute.Sitemap {
+  const entry = (path: string, lastModified: Date, priority: number) =>
+    locales.map((locale) => ({
+      url: `${BASE}/${locale}${path}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority,
+      alternates: {
+        languages: Object.fromEntries(locales.map((l) => [localeTags[l], `${BASE}/${l}${path}`])),
+      },
+    }));
 
-  return [...staticRoutes, ...projectRoutes];
+  const now = new Date();
+  return [
+    ...PAGES.flatMap((p) => entry(p, now, p === "" ? 1 : p === "/projects" ? 0.9 : 0.7)),
+    ...posts.flatMap((post) => entry(`/blog/${post.slug}`, new Date(post.date), 0.6)),
+    { url: `${BASE}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
+  ];
 }

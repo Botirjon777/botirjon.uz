@@ -1,115 +1,45 @@
 "use client";
 
-const skillCategories = [
-  {
-    label: "Frontend",
-    color: "indigo",
-    skills: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "JavaScript",
-      "HTML & CSS",
-      "Tailwind CSS",
-      "Three.js",
-    ],
-  },
-  {
-    label: "Backend",
-    color: "purple",
-    skills: [
-      "Node.js",
-      "Express.js",
-      "Python",
-      "FastAPI",
-      "Django",
-      "REST APIs",
-    ],
-  },
-  {
-    label: "Database",
-    color: "violet",
-    skills: ["PostgreSQL", "MongoDB", "SQLite", "OpenSearch", "Prisma ORM", "TypeORM"],
-  },
-  {
-    label: "AI & ML",
-    color: "fuchsia",
-    skills: [
-      "PyTorch",
-      "TensorFlow",
-      "OpenAI API",
-      "face-api.js",
-      "DeepFace",
-      "ONNX",
-      "LLMs (Large Language Models)",
-    ],
-  },
-  {
-    label: "DevOps & Tools",
-    color: "sky",
-    skills: ["Git", "GitHub Actions", "Docker", "AWS", "Linux"],
-  },
-  {
-    label: "Other",
-    color: "emerald",
-    skills: ["Telegram Bot API", "Facebook Graph API", "MobileNetV2", "Figma"],
-  },
-];
+import PageHeader from "@/components/page-header";
+import { useI18n } from "@/i18n/provider";
 
-const colorMap: Record<string, string> = {
-  indigo: "bg-indigo-50 text-indigo-700 border-indigo-100 hover:bg-indigo-100",
-  purple: "bg-purple-50 text-purple-700 border-purple-100 hover:bg-purple-100",
-  violet: "bg-violet-50 text-violet-700 border-violet-100 hover:bg-violet-100",
-  fuchsia:
-    "bg-fuchsia-50 text-fuchsia-700 border-fuchsia-100 hover:bg-fuchsia-100",
-  sky: "bg-sky-50 text-sky-700 border-sky-100 hover:bg-sky-100",
-  emerald:
-    "bg-emerald-50 text-emerald-700 border-emerald-100 hover:bg-emerald-100",
-};
-
-const headerColorMap: Record<string, string> = {
-  indigo: "from-indigo-500 to-indigo-700",
-  purple: "from-purple-500 to-purple-700",
-  violet: "from-violet-500 to-violet-700",
-  fuchsia: "from-fuchsia-500 to-fuchsia-700",
-  sky: "from-sky-500 to-sky-700",
-  emerald: "from-emerald-500 to-emerald-700",
-};
+const CATEGORIES = [
+  { key: "frontend", skills: ["React", "Next.js", "TypeScript", "JavaScript", "HTML & CSS", "Tailwind CSS", "Three.js"] },
+  { key: "backend", skills: ["Node.js", "Express.js", "Python", "FastAPI", "Django", "REST APIs"] },
+  { key: "database", skills: ["PostgreSQL", "MongoDB", "SQLite", "OpenSearch", "Drizzle ORM", "Prisma ORM", "TypeORM"] },
+  { key: "ai", skills: ["PyTorch", "TensorFlow", "OpenAI API", "face-api.js", "DeepFace", "ONNX", "LLMs"] },
+  { key: "devops", skills: ["Git", "GitHub Actions", "Docker", "AWS", "Linux"] },
+  { key: "other", skills: ["Telegram Bot API", "Facebook Graph API", "MobileNetV2", "Figma"] },
+] as const;
 
 const SkillsComponent = () => {
-  return (
-    <main className="min-h-screen py-16">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="mb-12">
-          <h1 className="section-title">Skills</h1>
-          <p className="section-subtitle">Technologies and tools I work with</p>
-        </div>
+  const { t } = useI18n();
+  const s = t.skills;
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skillCategories.map((cat, i) => (
-            <div
-              key={cat.label}
-              className="glass-card rounded-none p-6 animate-fade-in-up hover:shadow-lg hover:shadow-indigo-50 transition-all duration-300 hover:-translate-y-1"
-              style={{ animationDelay: `${i * 0.1}s` }}
+  return (
+    <main className="min-h-screen py-20 sm:py-28">
+      <div className="mx-auto max-w-6xl px-6">
+        <PageHeader eyebrow={s.eyebrow} title={s.title} />
+
+        <div className="grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+          {CATEGORIES.map(({ key, skills }, i) => (
+            <section
+              key={key}
+              className="animate-fade-in-up bg-black p-8"
+              style={{ animationDelay: `${0.15 + i * 0.06}s` }}
             >
-              <div
-                className={`inline-flex items-center px-3 py-1 rounded-none bg-gradient-to-r ${headerColorMap[cat.color]} mb-4`}
-              >
-                <span className="text-white text-xs font-bold uppercase tracking-wider">
-                  {cat.label}
-                </span>
+              <div className="flex items-baseline justify-between">
+                <h2 className="font-display text-3xl text-paper">{s.categories[key]}</h2>
+                <span className="font-mono text-[11px] text-flame">{String(i + 1).padStart(2, "0")}</span>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {cat.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className={`px-3 py-1 rounded-none text-xs font-semibold border transition-colors cursor-default ${colorMap[cat.color]}`}
-                  >
+              <ul className="mt-8 flex flex-wrap gap-2">
+                {skills.map((skill) => (
+                  <li key={skill} className="tag">
                     {skill}
-                  </span>
+                  </li>
                 ))}
-              </div>
-            </div>
+              </ul>
+            </section>
           ))}
         </div>
       </div>

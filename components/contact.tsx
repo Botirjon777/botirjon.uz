@@ -1,75 +1,56 @@
 "use client";
 
-import { FiInstagram } from "react-icons/fi";
-import { FaTelegramPlane } from "react-icons/fa";
+import { FiArrowUpRight } from "react-icons/fi";
+import { EmText } from "@/components/em";
+import { socials } from "@/data/socials";
+import { useI18n } from "@/i18n/provider";
 
-const socials = [
-  {
-    href: "https://t.me/botirjon_sh",
-    icon: FaTelegramPlane,
-    label: "Telegram (Username)",
-    value: "@botirjon_sh",
-    color: "text-sky-500",
-    bg: "bg-sky-50 border-sky-100",
-  },
-  {
-    href: "https://t.me/botirjon_log",
-    icon: FaTelegramPlane,
-    label: "Telegram (Channel)",
-    value: "botirjon_log",
-    color: "text-sky-600",
-    bg: "bg-sky-50 border-sky-100",
-  },
-  {
-    href: "https://www.instagram.com/_botirjonshokirov_/",
-    icon: FiInstagram,
-    label: "Instagram",
-    value: "@_botirjonshokirov_",
-    color: "text-pink-600",
-    bg: "bg-pink-50 border-pink-100",
-  },
+const channels = [
+  socials.telegram,
+  socials.instagram,
+  socials.email,
+  socials.channel,
+  socials.youtube,
+  socials.linkedin,
 ];
 
 const ContactComponent = () => {
-  return (
-    <main className="min-h-screen py-24">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="max-w-2xl mx-auto">
-          <div className="animate-fade-in-up text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-6">
-              Let&apos;s build something{" "}
-              <span className="gradient-text">great together</span>
-            </h2>
-            <p className="text-lg text-slate-400 leading-relaxed mb-10 max-w-lg mx-auto">
-              I am most active on Telegram and Instagram. Feel free to reach out
-              for collaborations, projects, or just to say hi!
-            </p>
+  const { t } = useI18n();
 
-            <div className="grid sm:grid-cols-2 gap-4 text-left">
-              {socials.map(({ href, icon: Icon, label, value, color, bg }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex items-center gap-4 p-5 rounded-none border ${bg} hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 group`}
-                >
-                  <div
-                    className={`w-12 h-12 rounded-none bg-slate-950 flex items-center justify-center shadow-sm ${color}`}
-                  >
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-400 font-medium">
-                      {label}
-                    </p>
-                    <p className={`text-sm font-semibold ${color}`}>{value}</p>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
+  return (
+    <main className="min-h-screen py-20 sm:py-28">
+      <div className="mx-auto max-w-5xl px-6">
+        <p className="eyebrow animate-fade-in-up mb-6">{t.contact.eyebrow}</p>
+        <h1 className="display animate-fade-in-up delay-100 text-6xl sm:text-8xl">
+          <EmText value={t.contact.title} />
+        </h1>
+        <p className="animate-fade-in-up delay-200 mt-8 max-w-lg text-lg leading-relaxed text-paper/70">
+          {t.contact.intro}
+        </p>
+
+        <ul className="animate-fade-in-up delay-300 mt-16 border-t border-line">
+          {channels.map(({ key, handle, href, icon: Icon }) => (
+            <li key={key} className="border-b border-line">
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-between gap-6 py-6"
+              >
+                <span className="flex items-center gap-4">
+                  <Icon className="h-5 w-5 text-mute transition-colors group-hover:text-flame" />
+                  <span className="eyebrow hidden w-40 shrink-0 sm:block">{t.contact.labels[key]}</span>
+                </span>
+                <span className="flex min-w-0 items-center gap-3">
+                  <span className="truncate font-display text-2xl text-paper transition-colors group-hover:text-flame sm:text-4xl">
+                    {handle}
+                  </span>
+                  <FiArrowUpRight className="h-5 w-5 shrink-0 text-mute transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-flame" />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </main>
   );

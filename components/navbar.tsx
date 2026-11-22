@@ -5,121 +5,117 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { HiMenu, HiX } from "react-icons/hi";
+import LanguageMenu from "@/components/language-menu";
+import { useI18n } from "@/i18n/provider";
 
-const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/experience", label: "Experience" },
-  { href: "/education", label: "Education" },
-  { href: "/projects", label: "Projects" },
-  { href: "/services", label: "Services" },
-  { href: "/skills", label: "Skills" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
-];
+const NAV = ["/projects", "/about", "/experience", "/blog", "/services"] as const;
+const NAV_KEY = {
+  "/projects": "work",
+  "/about": "about",
+  "/experience": "experience",
+  "/blog": "blog",
+  "/services": "services",
+} as const;
+
+/** The current path without its locale prefix ("/ru/about" → "/about"). */
+function stripLocale(pathname: string): string {
+  const rest = pathname.replace(/^\/(en|ru|uz)(?=\/|$)/, "");
+  return rest === "" ? "/" : rest;
+}
 
 const NavbarComponent = () => {
+  const { t, href } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  // /privacy has no locale version, so the switcher sends it to the home page.
+  const path = pathname === "/privacy" ? "/" : stripLocale(pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
 
+  const isActive = (p: string) => path === p || path.startsWith(`${p}/`);
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled || mobileOpen
-          ? "bg-black backdrop-blur-md shadow-sm border-b border-white/10"
-          : "bg-black/90 backdrop-blur-sm border-b border-white/5"
+      className={`fixed top-0 left-0 right-0 z-50 border-b bg-black/85 backdrop-blur-md transition-colors duration-300 ${
+        scrolled || mobileOpen ? "border-line" : "border-transparent"
       }`}
     >
-      <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <Image src="/logos/logo.png" alt="Botirjon Logo" width={140} height={40} className="h-8 w-auto object-contain" priority />
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-6">
+        <Link href={href("/")} className="flex shrink-0 items-center gap-3" aria-label={t.common.nav.home}>
+          <Image
+            src="/logos/logo.png"
+            alt={t.common.name}
+            width={140}
+            height={40}
+            className="h-8 w-auto object-contain"
+            priority
+          />
+          <span className="hidden font-mono text-[11px] uppercase tracking-[0.22em] text-mute xl:inline">
+            {t.common.name}
+          </span>
         </Link>
 
-        {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-1">
-          {NAV_LINKS.map(({ href, label }) => {
-            const isActive = pathname === href;
-            return (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className={`px-4 py-1.5 rounded-none-none text-sm font-medium transition-all duration-200 border-b-2 ${
-                    isActive
-                      ? "border-indigo-500 text-indigo-400"
-                      : "border-transparent text-slate-400 hover:text-white hover:border-white/20"
-                  }`}
-                >
-                  {label}
-                </Link>
-              </li>
-            );
-          })}
+        <ul className="hidden items-center gap-7 lg:flex">
+          {NAV.map((p) => (
+            <li key={p}>
+              <Link
+                href={href(p)}
+                className={`font-mono text-[11px] uppercase tracking-[0.18em] transition-colors duration-200 ${
+                  isActive(p) ? "text-flame" : "text-mute hover:text-paper"
+                }`}
+              >
+                {t.common.nav[NAV_KEY[p]]}
+              </Link>
+            </li>
+          ))}
         </ul>
 
-        {/* CTA */}
-        <a
-          href="mailto:shokirovbotirjon2003@gmail.com"
-          className="hidden md:inline-flex items-center px-5 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold rounded-none-none hover:from-indigo-500 hover:to-purple-500 transition-all duration-200 shadow-md shadow-indigo-500/20 hover:-translate-y-0.5"
-        >
-          Hire Me
-        </a>
+        <div className="hidden items-center gap-6 lg:flex">
+          <LanguageMenu path={path} />
+          <Link href={href("/contact")} className="btn-primary !px-4 !py-2.5">
+            {t.common.letsTalk}
+          </Link>
+        </div>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden w-10 h-10 flex items-center justify-center rounded-none-none text-slate-400 hover:bg-white/10 transition-colors"
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? (
-            <HiX className="w-5 h-5" />
-          ) : (
-            <HiMenu className="w-5 h-5" />
-          )}
-        </button>
+        <div className="flex items-center gap-4 lg:hidden">
+          <LanguageMenu path={path} />
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="flex h-10 w-10 items-center justify-center text-paper"
+            aria-label={t.common.toggleMenu}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <HiX className="h-5 w-5" /> : <HiMenu className="h-5 w-5" />}
+          </button>
+        </div>
       </nav>
 
-      {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden animate-slide-down bg-slate-950/98 backdrop-blur-md border-b border-white/10 px-6 py-4">
-          <ul className="flex flex-col gap-1">
-            {NAV_LINKS.map(({ href, label }) => {
-              const isActive = pathname === href;
+        <div className="animate-slide-down border-t border-line bg-black px-6 pb-8 pt-4 lg:hidden">
+          <ul className="flex flex-col">
+            {[...NAV, "/skills", "/contact"].map((p) => {
+              const key = p === "/skills" ? "skills" : p === "/contact" ? "contact" : NAV_KEY[p as keyof typeof NAV_KEY];
               return (
-                <li key={href}>
+                <li key={p} className="border-b border-line">
                   <Link
-                    href={href}
-                    className={`block px-4 py-2.5 rounded-none-none text-sm font-medium transition-all duration-200 border-b-2 ${
-                      isActive
-                        ? "border-indigo-500 text-indigo-400"
-                        : "border-transparent text-slate-400 hover:text-white hover:border-white/20"
-                    }`}
+                    href={href(p)}
+                    className={`block py-4 font-display text-3xl ${isActive(p) ? "italic text-flame" : "text-paper"}`}
                   >
-                    {label}
+                    {t.common.nav[key]}
                   </Link>
                 </li>
               );
             })}
-            <li className="mt-2">
-              <a
-                href="mailto:shokirovbotirjon2003@gmail.com"
-                className="block px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-none-none text-sm font-semibold text-center"
-              >
-                Hire Me
-              </a>
-            </li>
           </ul>
         </div>
       )}
