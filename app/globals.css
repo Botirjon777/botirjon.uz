@@ -1,12 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --font-inter: "Inter", sans-serif;
-}
 
 * {
   box-sizing: border-box;
@@ -19,37 +13,83 @@ html {
 }
 
 body {
-  font-family: var(--font-inter), sans-serif;
-  background-color: #020617; /* slate-950 */
-  color: #f1f5f9; /* slate-100 */
+  background-color: #000;
+  color: #efeae0;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #ff5b2e;
+  color: #000;
+}
+
+/* Film grain over the whole page: keeps large black areas from looking flat. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@layer components {
+  /* Small mono label that sits above headings. */
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.22em] text-mute;
+  }
+
+  .display {
+    @apply font-display font-normal leading-[0.95] tracking-[-0.02em] text-paper;
+  }
+
+  .display em {
+    @apply italic text-flame;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-flame px-6 py-3.5 font-mono text-xs font-medium uppercase tracking-[0.16em] text-black transition-colors duration-200 hover:bg-paper;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 border border-line px-6 py-3.5 font-mono text-xs font-medium uppercase tracking-[0.16em] text-paper transition-colors duration-200 hover:border-paper;
+  }
+
+  .link-underline {
+    @apply border-b border-line pb-0.5 text-paper transition-colors duration-200 hover:border-flame hover:text-flame;
+  }
+
+  .card {
+    @apply border border-line bg-ink-2 transition-colors duration-300;
+  }
+
+  .tag {
+    @apply border border-line px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-mute;
+  }
 }
 
 @layer utilities {
+  /* Kept under their old names so the inner pages pick up the new look. */
   .gradient-text {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    @apply font-display italic font-normal text-flame;
   }
 
   .glass-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+    @apply border border-line bg-ink-2;
   }
 
   .section-container {
-    @apply max-w-5xl mx-auto px-6;
+    @apply mx-auto max-w-5xl px-6;
   }
 
   .section-title {
-    @apply text-3xl font-bold mb-2 gradient-text;
+    @apply font-display text-5xl font-normal leading-none tracking-[-0.02em] text-paper sm:text-6xl mb-3;
   }
 
   .section-subtitle {
-    @apply text-slate-500 mb-12 text-base;
+    @apply font-mono text-[11px] uppercase tracking-[0.22em] text-mute mb-12;
   }
 }
 
@@ -58,16 +98,6 @@ body {
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInLeft {
-  from { opacity: 0; transform: translateX(-32px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(32px); }
-  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes fadeIn {
@@ -80,105 +110,30 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33%       { transform: translateY(-12px) rotate(2deg); }
-  66%       { transform: translateY(-6px) rotate(-1deg); }
-}
-
-@keyframes floatReverse {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33%       { transform: translateY(10px) rotate(-2deg); }
-  66%       { transform: translateY(5px) rotate(1deg); }
-}
-
-@keyframes pulse-ring {
-  0%   { transform: scale(0.8); opacity: 0.8; }
-  100% { transform: scale(2);   opacity: 0; }
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50%       { background-position: 100% 50%; }
-}
-
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-@keyframes counter-in {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes typewriter {
-  from { width: 0; }
-  to   { width: 100%; }
-}
-
-/* ─── Utility classes ─────────────────────────────────── */
-
-.animate-fade-in-up    { animation: fadeInUp 0.7s ease both; }
-.animate-fade-in-left  { animation: fadeInLeft 0.7s ease both; }
-.animate-fade-in-right { animation: fadeInRight 0.7s ease both; }
-.animate-fade-in       { animation: fadeIn 0.7s ease both; }
-.animate-slide-down    { animation: slideDown 0.4s ease both; }
-.animate-blink         { animation: blink 1.2s step-end infinite; }
-.animate-float         { animation: float 5s ease-in-out infinite; }
-.animate-float-reverse { animation: floatReverse 6s ease-in-out infinite; }
-.animate-pulse-ring    { animation: pulse-ring 2s ease-out infinite; }
-.animate-spin-slow     { animation: spin-slow 12s linear infinite; }
-.animate-gradient      { animation: gradientShift 5s ease infinite; background-size: 300% 300%; }
-.animate-counter-in    { animation: counter-in 0.6s ease both; }
-
-@keyframes blob {
-  0% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-  100% { transform: translate(0px, 0px) scale(1); }
-}
-.animate-blob { animation: blob 10s infinite alternate; }
-.animation-delay-2000 { animation-delay: 2s; }
-.animation-delay-4000 { animation-delay: 4s; }
+.animate-fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.animate-fade-in    { animation: fadeIn 0.8s ease both; }
+.animate-slide-down { animation: slideDown 0.3s ease both; }
+.animate-marquee    { animation: marquee 40s linear infinite; }
 
 /* Scroll-reveal: elements start hidden, .is-visible triggers the animation */
-.reveal {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-32px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal-left.is-visible {
-  opacity: 1;
-  transform: translateX(0);
-}
+.reveal,
+.reveal-left,
 .reveal-right {
   opacity: 0;
-  transform: translateX(32px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
+.reveal.is-visible,
+.reveal-left.is-visible,
 .reveal-right.is-visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0);
 }
 
 .delay-100 { animation-delay: 0.1s; transition-delay: 0.1s; }
@@ -187,5 +142,25 @@ body {
 .delay-400 { animation-delay: 0.4s; transition-delay: 0.4s; }
 .delay-500 { animation-delay: 0.5s; transition-delay: 0.5s; }
 .delay-600 { animation-delay: 0.6s; transition-delay: 0.6s; }
-.delay-700 { animation-delay: 0.7s; transition-delay: 0.7s; }
-.delay-800 { animation-delay: 0.8s; transition-delay: 0.8s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-left,
+  .reveal-right {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* The Cyrillic display face runs wider than Instrument Serif, so the Russian
+   hero headline gets a smaller size to keep to three lines. */
+html:lang(ru-RU) .hero-title {
+  font-size: min(9.5vw, 6.75rem);
+  line-height: 1.02;
+}

@@ -10,7 +10,17 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+  			display: ['var(--font-display)', 'Georgia', 'serif'],
+  			mono: ['var(--font-mono)', 'ui-monospace', 'monospace']
+  		},
   		colors: {
+  			ink: { DEFAULT: '#000000', 2: '#0d0c0b', 3: '#161514' },
+  			paper: '#efeae0',
+  			mute: '#8d877c',
+  			line: 'rgba(239,234,224,0.12)',
+  			flame: { DEFAULT: '#ff5b2e', soft: '#ff8a66' },
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

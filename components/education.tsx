@@ -1,71 +1,37 @@
 "use client";
 
-import { HiAcademicCap } from "react-icons/hi";
-
-const courses = [
-  "Algorithms & Data Structures",
-  "Computer Systems Architecture",
-  "REST API Development",
-  "Databases",
-  "Machine Learning",
-  "Deep Learning",
-  "Cloud-Oriented Web Apps",
-  "Operating Systems",
-  "Network Technologies",
-  "OOP",
-  "Software Engineering",
-  "Artificial Intelligence",
-];
+import PageHeader from "@/components/page-header";
+import { useI18n } from "@/i18n/provider";
 
 const EducationComponent = () => {
+  const { t } = useI18n();
+  const e = t.education;
+
   return (
-    <main className="min-h-screen py-16">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="mb-12">
-          <h1 className="section-title">Education</h1>
-          <p className="section-subtitle">My academic background</p>
-        </div>
+    <main className="min-h-screen py-20 sm:py-28">
+      <div className="mx-auto max-w-6xl px-6">
+        <PageHeader eyebrow={e.eyebrow} title={e.title} />
 
-        <div className="max-w-2xl animate-fade-in-up">
-          <div className="glass-card rounded-none p-8 hover:shadow-xl hover:shadow-indigo-500/20 transition-all duration-300">
-            <div className="w-14 h-14 rounded-none bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center mb-6 shadow-lg shadow-indigo-500/20">
-              <HiAcademicCap className="w-7 h-7 text-white" />
-            </div>
-
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
-              <div>
-                <h2 className="text-xl font-bold text-white">
-                  University of Economics and Humanities
-                </h2>
-                <p className="text-indigo-600 font-semibold mt-1">
-                  B.Sc. Computer Science
-                </p>
-              </div>
-              <div className="text-right flex-shrink-0">
-                <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 text-xs font-semibold rounded-none border border-indigo-100">
-                  Mar 2022 – Feb 2026
-                </span>
-                <p className="text-sm text-slate-400 mt-1">Warsaw, Poland</p>
-              </div>
-            </div>
-
-            <div className="border-t border-white/10 pt-6">
-              <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
-                Relevant Courses
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {courses.map((course) => (
-                  <span
-                    key={course}
-                    className="px-3 py-1 bg-purple-50 text-purple-700 rounded-none text-xs font-medium border border-purple-100 hover:bg-purple-100 transition-colors cursor-default"
-                  >
-                    {course}
-                  </span>
-                ))}
-              </div>
-            </div>
+        <section className="animate-fade-in-up delay-200 grid gap-6 border-t border-line py-10 md:grid-cols-[14rem_1fr] md:gap-12">
+          <div>
+            <p className="eyebrow">{e.period}</p>
+            <p className="mt-2 text-sm text-mute">{e.location}</p>
           </div>
-        </div>
+          <div>
+            <h2 className="font-display text-4xl text-paper sm:text-5xl">{e.university}</h2>
+            <p className="mt-2 font-mono text-xs uppercase tracking-[0.14em] text-flame">{e.degree}</p>
+
+            <p className="eyebrow mb-5 mt-12">{e.coursesTitle}</p>
+            <ul className="grid border-t border-line sm:grid-cols-2">
+              {e.courses.map((course, i) => (
+                <li key={course} className="flex gap-4 border-b border-line py-3 text-paper/80">
+                  <span className="font-mono text-[11px] leading-6 text-mute">{String(i + 1).padStart(2, "0")}</span>
+                  {course}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
       </div>
     </main>
   );
